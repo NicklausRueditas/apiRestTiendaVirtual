@@ -1,18 +1,38 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { SpecsProducts, SpecsProductsSchema } from './specs-products.schema';
+import { v4 as uuidv4 } from 'uuid';
 
 export type ProductsDocument = Products & Document;
 
-@Schema()
+@Schema({timestamps: true})
 export class Products {
-  @Prop({ unique: true })
-  name: string;
+
+  @Prop({ type: String, default: uuidv4 })
+    _id: string;
+
+  @Prop({ unique: true, length: 6 })
+  code: string;
+
+  @Prop({ minlength: 2 })
+  brand: string;
+
+  @Prop({ minlength: 10 })
+  description: string;
+
+  @Prop({ type: SpecsProductsSchema })
+  specifications:SpecsProducts;
 
   @Prop()
   price: number;
 
+  @Prop({ type: [String], required: true })
+  category: string[];
+
   @Prop()
-  description: string;
+  stock: number;
+
+  @Prop({ type: [String], required: true })
+  gallery: string[];
 }
 
 export const ProductsSchema = SchemaFactory.createForClass(Products);

@@ -10,7 +10,7 @@ import config from 'src/config';
         MongooseModule.forRootAsync({
             useFactory: async (configService: ConfigType<typeof config>) => {
                 return{
-                    uri:configService.mongo.mongo_db_uri
+                    uri:configService.mongo.mongo_uri
                 }
             },
             inject: [config.KEY],
