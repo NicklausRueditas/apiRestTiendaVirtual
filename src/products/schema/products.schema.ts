@@ -30,9 +30,6 @@ export class Products {
 
   @Prop()
   stock: number;
-
-  @Prop({ type: [String], required: true })
-  gallery: string[];
 }
 
 export const ProductsSchema = SchemaFactory.createForClass(Products);

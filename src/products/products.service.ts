@@ -9,17 +9,16 @@ import { Model } from 'mongoose'
 @Injectable()
 export class ProductsService {
 
-  constructor(@InjectModel(Products.name) private productsModule: Model<ProductsDocument> ){
-
-  }
+  constructor(@InjectModel(Products.name) private productsModel: Model<ProductsDocument>) { }
 
   async create(createProductDto: CreateProductDto) {
-    const productCreated = await this.productsModule.create(createProductDto)
+    const productCreated = await this.productsModel.create(createProductDto)
     return productCreated
   }
 
-  findAll() {
-    return `This action returns all products`;
+  async findAll() {
+    const productList = await this.productsModel.find({})
+    return productList;
   }
 
   findOne(id: number) {
