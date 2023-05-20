@@ -8,6 +8,9 @@ export class CreateProductDto {
     @IsNotEmpty()
     brand: string;
 
+    @IsNotEmpty()
+    model: string;
+
     description: string;
 
     specifications: string[];

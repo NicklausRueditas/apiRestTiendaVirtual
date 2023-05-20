@@ -16,6 +16,9 @@ export class Products {
   @Prop({ minlength: 2 })
   brand: string;
 
+  @Prop({ minlength: 2 })
+  model: string;
+
   @Prop({ minlength: 10 })
   description: string;
 

@@ -16,8 +16,8 @@ import { ImagesModule } from './images/images.module';
       isGlobal: true,
     }),
     DatabaseModule,
-    ProductsModule,
-    ImagesModule
+    ImagesModule,
+    ProductsModule
   ],
   controllers: [],
   providers: [],

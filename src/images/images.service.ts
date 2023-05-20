@@ -21,12 +21,13 @@ export class ImagesService {
     return await image.save();
   }
 
-  findAll() {
-    return `This action returns all images`;
+  async findAll() {
+    const imagesList = await this.imagesModel.find({})
+    return imagesList;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} image`;
+  async getImageByFilename(filename: string): Promise<Images> {
+    return this.imagesModel.findOne({ filename }).exec();
   }
 
   update(id: number, updateImageDto: UpdateImageDto) {

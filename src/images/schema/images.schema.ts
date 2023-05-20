@@ -1,5 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { v4 as uuidv4 } from 'uuid';
+import { Document } from 'mongoose';
+
+import * as mongoose from 'mongoose'
+import { env } from 'process';
 
 export type ImagesDocument = Images & Document;
 
@@ -18,11 +22,23 @@ export class Images {
     @Prop()
     size: number;
 
-    @Prop()
+    @Prop({ default: '' })
     url: string;
 
     @Prop()
     codigo: string;
+
 }
 
-export const ImagesSchema = SchemaFactory.createForClass(Images);
+const ImagesSchema = SchemaFactory.createForClass(Images);
+
+ImagesSchema.pre<ImagesDocument>('save', function (next) {
+  if (!this.url) {
+    this.url = `${env.URL}/images/${this.filename}`;
+  }
+  next();
+});
+
+export const ImagesModel = mongoose.model<ImagesDocument>('Images', ImagesSchema);
+
+export { ImagesSchema }

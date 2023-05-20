@@ -12,9 +12,14 @@ export class ProductsController {
     return this.productsService.create(createProductDto);
   }
 
-  @Get()
+  @Get('date')
   findAll() {
     return this.productsService.findAll();
+  }
+
+  @Get()
+  async getAllProducts() {
+    return this.productsService.getProductsWithImages();
   }
 
   @Get(':id')

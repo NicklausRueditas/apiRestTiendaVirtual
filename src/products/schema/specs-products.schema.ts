@@ -9,9 +9,6 @@ export class SpecsProducts {
     @Prop({ type: String, default: uuidv4 })
     _id: string;
 
-    @Prop({ minlength: 2 })
-    model: string;
-
     @Prop({ minlength: 3 })
     color: string;
 
