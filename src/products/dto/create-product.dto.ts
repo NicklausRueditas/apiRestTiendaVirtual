@@ -4,6 +4,9 @@ export class CreateProductDto {
 
     @IsNotEmpty()
     code: string;
+
+    @IsNotEmpty()
+    name: string;
     
     @IsNotEmpty()
     brand: string;
