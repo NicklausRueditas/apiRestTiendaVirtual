@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import config from './config';
 // import { environments } from './environments';
 import { ImagesModule } from './images/images.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -17,7 +18,8 @@ import { ImagesModule } from './images/images.module';
     }),
     DatabaseModule,
     ImagesModule,
-    ProductsModule
+    ProductsModule,
+    UsersModule
   ],
   controllers: [],
   providers: [],
