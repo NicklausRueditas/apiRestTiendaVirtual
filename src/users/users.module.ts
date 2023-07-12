@@ -1,11 +1,21 @@
 import { Module } from '@nestjs/common';
-import { UsersService } from './services/users.service';
+
 import { UsersController } from './controller/users.controller';
 import { AuthController } from './controller/auth.controller';
-import { AuthService } from './services/auth.service';
+
 import { GoogleStrategy } from './strategy/google.strategy';
+
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from './schemas/user.schema';
+
+import { UsersService } from './services/users.service';
+import { AuthService } from './services/auth.service';
+import { JwtAuthService } from './services/jwt-auth.service';
+
+import { JwtModule } from '@nestjs/jwt';
+
+import { jwtConstants } from './constants/jwt.constants';
+import { JwtStrategy } from './strategy/jwt.strategy';
 
 @Module({
   imports:[
@@ -14,9 +24,13 @@ import { User, UserSchema } from './schemas/user.schema';
         name: User.name,
         schema: UserSchema,
       },
-    ])
+    ]),
+    JwtModule.register({
+      secret: jwtConstants.secret, // Reemplaza con tu clave secreta real
+      signOptions: { expiresIn: '1h' }, // Configura el tiempo de expiración del token según tus necesidades
+    })
   ],
   controllers: [UsersController, AuthController],
-  providers: [UsersService, AuthService, GoogleStrategy]
+  providers: [UsersService, AuthService, GoogleStrategy,JwtAuthService,JwtStrategy]
 })
 export class UsersModule {}
