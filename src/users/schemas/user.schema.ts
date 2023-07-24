@@ -8,7 +8,7 @@ export class User extends Document {
 
     @Prop()
     googleId: string;
-    
+
     @Prop()
     displayName: string;
 
@@ -20,6 +20,9 @@ export class User extends Document {
 
     @Prop()
     password: string;
+
+    // @Prop({ type: [String], default: [] })
+    // roles: string[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
