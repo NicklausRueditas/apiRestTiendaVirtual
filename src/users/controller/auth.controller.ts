@@ -7,7 +7,6 @@ import { UsersService } from '../services/users.service';
 import { LoginUserDto } from '../dto/login-user.dto';
 import { JwtAuthService } from '../services/jwt-auth.service';
 
-
 @Controller('auth')
 export class AuthController {
   
@@ -47,5 +46,11 @@ export class AuthController {
     const token = this.jwtAuthService.generateJwtToken(user);
     res.cookie('sessionToken', token, { httpOnly: true });
     res.send();
+  }
+
+  @Get('profile')
+  async getProfile(@Req() req) {
+    // Aquí puedes devolver el perfil del usuario autenticado
+    return req.user; // La información del usuario está disponible en la propiedad "user" del objeto "req" gracias al JwtAuthGuard
   }
 }

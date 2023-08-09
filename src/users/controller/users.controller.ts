@@ -3,6 +3,8 @@ import { UsersService } from '../services/users.service';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
+import { RolesGuard } from '../guards/roles.guard';
+import { Roles } from '../decorators/roles.decorator';
 
 
 @Controller('users')
@@ -14,8 +16,9 @@ export class UsersController {
     return this.usersService.createUser(createUserDto);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get()
+  @UseGuards(JwtAuthGuard, RolesGuard) // Aplica los guardianes JwtAuthGuard y RolesGuard
+  @Roles('admin') // Requiere el rol 'admin' para acceder a esta ruta
   findAll() {
     return this.usersService.findAll();
   }
