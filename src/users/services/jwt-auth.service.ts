@@ -9,7 +9,7 @@ export class JwtAuthService {
   generateJwtToken(user: User): string {
     const payload = {
       sub: user._id, // Usamos el campo "_id" del usuario como identificador único (asegúrate de que sea el mismo campo que usaste en el esquema de usuario)
-      name: user.displayName,
+      displayName: user.displayName,
       roles: user.roles, // Incluimos los roles del usuario en el token
       permissions: user.permissions, // Incluimos los permisos del usuario en el token
     };

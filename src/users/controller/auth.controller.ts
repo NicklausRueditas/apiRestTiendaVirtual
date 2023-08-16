@@ -9,7 +9,7 @@ import { JwtAuthService } from '../services/jwt-auth.service';
 
 @Controller('auth')
 export class AuthController {
-  
+
   constructor(private readonly authService: AuthService, private readonly userService: UsersService, private readonly jwtAuthService: JwtAuthService) { }
 
   @Get('google')
@@ -24,9 +24,7 @@ export class AuthController {
     const user = req.user;
 
     // Generar el token JWT utilizando JwtAuthService
-    console.log(user)
     const token = await this.jwtAuthService.generateJwtToken(user);
-    console.log(token)
     res.cookie('sessionToken', token, { httpOnly: true });
     res.redirect('http://localhost:4200/business/inventory'); // Redirige al usuario a la página principal después de la autenticación de Google
   }
@@ -39,18 +37,22 @@ export class AuthController {
   @Post('login')
   async login(@Body() loginUserDto: LoginUserDto, @Res() res): Promise<void> {
     const { email, password } = loginUserDto;
+
+    // Validar las credenciales del usuario usando el servicio de autenticación
     const user = await this.authService.validateUser(email, password);
+
     if (!user) {
+      // Si las credenciales no son válidas, lanzar una UnauthorizedException
       throw new UnauthorizedException('Credenciales inválidas');
     }
-    const token = this.jwtAuthService.generateJwtToken(user);
-    res.cookie('sessionToken', token, { httpOnly: true });
-    res.send();
-  }
 
-  @Get('profile')
-  async getProfile(@Req() req) {
-    // Aquí puedes devolver el perfil del usuario autenticado
-    return req.user; // La información del usuario está disponible en la propiedad "user" del objeto "req" gracias al JwtAuthGuard
+    // Generar un token JWT para el usuario autenticado
+    const token = this.jwtAuthService.generateJwtToken(user);
+
+    // Establecer el token como una cookie en la respuesta (httpOnly para seguridad)
+    res.cookie('sessionToken', token, { httpOnly: true });
+
+    // Enviar una respuesta exitosa
+    res.send();
   }
 }

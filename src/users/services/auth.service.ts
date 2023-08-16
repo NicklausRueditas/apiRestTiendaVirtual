@@ -27,15 +27,6 @@ export class AuthService {
     return newUser.save();
   }
 
-  async login(email: string, password: string): Promise<string> {
-    const user = await this.validateUser(email, password);
-    if (!user) {
-      throw new UnauthorizedException('Credenciales inválidas');
-    }
-    const token = this.jwtAuthService.generateJwtToken(user);
-    return token;
-  }
-
   async validateUser(email: string, password: string): Promise<User> {
     const user = await this.userModel.findOne({ email }).exec();
 

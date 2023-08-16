@@ -24,8 +24,6 @@ export class User extends Document {
     @Prop({ default: ['user'] }) // Valor predeterminado 'user' para nuevos usuarios
     roles: string[]; // Array de roles asignados al usuario
 
-    @Prop({ default: [] })
-    permissions: string[]; // Array de permisos específicos del usuario
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
