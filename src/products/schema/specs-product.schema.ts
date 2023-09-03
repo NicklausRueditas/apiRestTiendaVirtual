@@ -1,13 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { v4 as uuidv4 } from 'uuid';
 
-export type SpecsProductsDocument = SpecsProducts & Document;
+export type SpecsProductsDocument = SpecsProduct & Document;
 
 @Schema()
-export class SpecsProducts {
-
-    @Prop({ type: String, default: uuidv4 })
-    _id: string;
+export class SpecsProduct {
 
     @Prop({ minlength: 3 })
     color: string;
@@ -31,4 +27,4 @@ export class SpecsProducts {
     ability: string;
 }
 
-export const SpecsProductsSchema = SchemaFactory.createForClass(SpecsProducts);
+export const SpecsProductsSchema = SchemaFactory.createForClass(SpecsProduct);

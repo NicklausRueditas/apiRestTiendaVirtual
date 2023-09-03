@@ -8,6 +8,7 @@ import config from './config';
 // import { environments } from './environments';
 import { ImagesModule } from './images/images.module';
 import { UsersModule } from './users/users.module';
+import { TicketsModule } from './tickets/tickets.module';
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { UsersModule } from './users/users.module';
     DatabaseModule,
     ImagesModule,
     ProductsModule,
-    UsersModule
+    UsersModule,
+    TicketsModule
   ],
   controllers: [],
   providers: [],

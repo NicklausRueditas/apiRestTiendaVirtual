@@ -4,8 +4,8 @@ import { ProductsController } from './products.controller';
 import { MongooseModule, Schema } from '@nestjs/mongoose';
 
 import { ImagesModule } from '../images/images.module';
-import { Products, ProductsSchema  } from './schema/products.schema';
 import { Images, ImagesSchema } from '../images/schema/images.schema';
+import { Product, ProductSchema } from './schema/product.schema';
 
 @Module({
   imports:[
@@ -16,12 +16,13 @@ import { Images, ImagesSchema } from '../images/schema/images.schema';
         schema: ImagesSchema,
       },
       {
-        name: Products.name,
-        schema: ProductsSchema
+        name: Product.name,
+        schema: ProductSchema
       }
     ])
   ],
   controllers: [ProductsController],
-  providers: [ProductsService]
+  providers: [ProductsService],
+  exports: [ProductsService],
 })
 export class ProductsModule {}

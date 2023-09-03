@@ -5,22 +5,23 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { Images, ImagesDocument } from '../images/schema/images.schema';
+import { Product, ProductDocument } from './schema/product.schema';
 
-import { Products, ProductsDocument } from './schema/products.schema';
+
 
 @Injectable()
 export class ProductsService {
   constructor(
-    @InjectModel(Products.name) private productsModel: Model<ProductsDocument>,
+    @InjectModel(Product.name) private productModel: Model<ProductDocument>,
     @InjectModel(Images.name) private imagesModel: Model<ImagesDocument>,
   ) { }
 
-  async findAllJoinImages(): Promise<ProductsDocument[]> {
+  async findAllJoinImages(): Promise<ProductDocument[]> {
     
     // Realizar join entre 'products' e 'images' utilizando aggregate
 
     try {
-      const productsWithImages = await this.productsModel.aggregate([
+      const productsWithImages = await this.productModel.aggregate([
         {
           $lookup: {
             from: 'images',
@@ -39,9 +40,9 @@ export class ProductsService {
 
   }
 
-  async findAll(): Promise<ProductsDocument[]> {
+  async findAll(): Promise<Product[]> {
     try {
-      const productList = await this.productsModel.find().exec();
+      const productList = await this.productModel.find().exec();
       return productList;
 
     } catch (error) {
@@ -54,7 +55,7 @@ export class ProductsService {
 
   async create(createProductDto: CreateProductDto) {
     try {
-      const createdProduct = new this.productsModel(createProductDto);
+      const createdProduct = new this.productModel(createProductDto);
       const savedProduct = await createdProduct.save();
 
       return savedProduct;
@@ -64,9 +65,9 @@ export class ProductsService {
     }
   }
 
-  async findById(id: string): Promise<Products | null> {
+  async findById(id: string): Promise<Product | null> {
     try {
-      const product = await this.productsModel.findById(id).exec();
+      const product = await this.productModel.findById(id).exec();
       return product;
 
     } catch (error) {
@@ -74,9 +75,9 @@ export class ProductsService {
     }
   }
 
-  async update(id: string, updateProductDto: UpdateProductDto): Promise<Products> {
+  async update(id: string, updateProductDto: UpdateProductDto): Promise<Product> {
     try {
-      const updatedProduct = await this.productsModel
+      const updatedProduct = await this.productModel
         .findByIdAndUpdate(id, updateProductDto, { new: true })
         .exec();
 
@@ -87,9 +88,9 @@ export class ProductsService {
     }
   }
 
-  async remove(id: string): Promise<Products> {
+  async remove(id: string): Promise<Product> {
     try {
-      const deletedProduct = await this.productsModel.findByIdAndDelete(id).exec();
+      const deletedProduct = await this.productModel.findByIdAndDelete(id).exec();
       return deletedProduct;
 
     } catch (error) {
