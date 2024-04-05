@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 
-import { UsersController } from './controller/users.controller';
-import { AuthController } from './controller/auth.controller';
+import { ManageController } from './controllers/manage.controller';
+import { AuthController } from './controllers/auth.controller';
 
 import { GoogleStrategy } from './strategy/google.strategy';
 
@@ -16,6 +16,7 @@ import { JwtModule } from '@nestjs/jwt';
 
 import { jwtConstants } from './constants/jwt.constants';
 import { JwtStrategy } from './strategy/jwt.strategy';
+import { SesionController } from './controllers/sesion.controller';
 
 @Module({
   imports:[
@@ -27,10 +28,10 @@ import { JwtStrategy } from './strategy/jwt.strategy';
     ]),
     JwtModule.register({
       secret: jwtConstants.secret, // Reemplaza con tu clave secreta real
-      signOptions: { expiresIn: '1h' }, // Configura el tiempo de expiración del token según tus necesidades
+      signOptions: { expiresIn: '6h' }, // Configura el tiempo de expiración del token según tus necesidades
     })
   ],
-  controllers: [UsersController, AuthController],
+  controllers: [ManageController, AuthController, SesionController],
   providers: [UsersService, AuthService, GoogleStrategy,JwtAuthService,JwtStrategy]
 })
 export class UsersModule {}

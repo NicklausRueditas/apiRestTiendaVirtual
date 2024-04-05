@@ -26,7 +26,7 @@ export class AuthController {
     // Generar el token JWT utilizando JwtAuthService
     const token = await this.jwtAuthService.generateJwtToken(user);
     res.cookie('sessionToken', token, { httpOnly: true });
-    res.redirect('http://localhost:4200/business/inventory'); // Redirige al usuario a la página principal después de la autenticación de Google
+    res.redirect('http://localhost:4200/home'); // Redirige al usuario a la página principal después de la autenticación de Google
   }
 
   @Post('register')

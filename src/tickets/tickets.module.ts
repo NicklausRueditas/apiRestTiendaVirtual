@@ -7,6 +7,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Ticket, TicketSchema } from './schemas/ticket.schema';
 import { Client, ClientSchema } from './schemas/clients/client.schema';
 import { ClientsController } from './controllers/clients.controller';
+import { GeneratePdfService } from './reports/generate-pdf.service';
 
 @Module({
   imports: [
@@ -23,7 +24,7 @@ import { ClientsController } from './controllers/clients.controller';
     ]),
   ],
   controllers: [TicketsController, ClientsController],
-  providers: [ClientsService, TicketsService],
+  providers: [ClientsService, TicketsService,GeneratePdfService],
   exports: [ClientsService], // Agrega esto si planeas usar ClientsService en otros módulos
 })
 export class TicketsModule {}
