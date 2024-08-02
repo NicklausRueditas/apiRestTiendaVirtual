@@ -27,6 +27,7 @@ export class UsersService {
     const newUser = new this.userModel({
       ...createUserDto,
       password: hashedPassword,
+      profilePicture: 'http://localhost:3000/image/660eec764f0589c7141690f0.png'
     });
 
     return newUser.save();

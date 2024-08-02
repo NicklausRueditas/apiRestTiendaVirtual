@@ -2,7 +2,9 @@
 /dist
 /node_modules
 /pdfs
-/uploads
+
+/uploads/*.png
+!/uploads/660eec764f0589c7141690f0.png
 
 # Logs
 logs
