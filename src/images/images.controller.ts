@@ -12,18 +12,18 @@ import { diskStorage } from 'multer';
 import { Response } from 'express';
 import * as path from 'path';
 
-@Controller('images')
+@Controller('image')
 export class ImagesController {
   constructor(private readonly imagesService: ImagesService) { }
 
-  @Post('uploads')
+  @Post('upload')
   @UseInterceptors(
 
     FileInterceptor('file', {
       storage: diskStorage({
         destination: './uploads',
         filename: (req, file, cb) => {
-          const filename: string = uuidv4();
+          const filename: string = req.body.idLink;
           cb(null, `${filename}${extname(file.originalname)}`);
         }
       }),
@@ -43,17 +43,18 @@ export class ImagesController {
   }
 
 
-  @Get()
+  @Get('all')
   findAll() {
     return this.imagesService.findAll();
   }
 
-  @Get(':filename')
-  async getImageByFilename(@Param('filename') filename: string, @Res() res: Response) {
-    const image = await this.imagesService.getImageByFilename(filename);
+  @Get(':idLink')
+  async getImageByFilename(@Param('idLink') idLink: string, @Res() res: Response) {
+    const image = await this.imagesService.getImageByFilename(idLink);
 
     // Obtener la ruta absoluta al archivo de imagen
-    const imagePath = path.join(__dirname, '..', '..', 'uploads', image.filename);
+    const imagePath = path.join(__dirname, '..', '..', 'uploads', image.idLink
+    );
 
     // Establecer el encabezado Content-Type adecuado para la imagen
     res.setHeader('Content-Type', image.mimetype);
@@ -63,18 +64,13 @@ export class ImagesController {
 
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.imagesService.findOne(+id);
-  // }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateImageDto: UpdateImageDto) {
-    return this.imagesService.update(+id, updateImageDto);
+  @Patch(':idLink')
+  update(@Param('idLink') idLink: string, @Body() updateImageDto: UpdateImageDto) {
+    return this.imagesService.update(+idLink, updateImageDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.imagesService.remove(+id);
+  @Delete(':idLink')
+  remove(@Param('idLink') idLink: string) {
+    return this.imagesService.remove(+idLink);
   }
 }

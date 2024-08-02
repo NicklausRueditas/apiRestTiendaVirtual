@@ -12,9 +12,10 @@ export class ImagesService {
 
   async uploadImage(file: Express.Multer.File, createImageDto: CreateImageDto): Promise<Images> {
     const {filename, mimetype,size} = file;
+    const idLink = filename
     const image = new this.imagesModel({
       ...createImageDto,
-      filename,
+      idLink,
       mimetype,
       size
     });
@@ -26,8 +27,8 @@ export class ImagesService {
     return imagesList;
   }
 
-  async getImageByFilename(filename: string): Promise<Images> {
-    return this.imagesModel.findOne({ filename }).exec();
+  async getImageByFilename(idLink: string): Promise<Images> {
+    return this.imagesModel.findOne({ idLink }).exec();
   }
 
   update(id: number, updateImageDto: UpdateImageDto) {

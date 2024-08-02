@@ -9,12 +9,9 @@ export type ImagesDocument = Images & Document;
 
 @Schema({ timestamps: true })
 export class Images {
-
-    @Prop({ type: String, default: uuidv4 })
-    _id: string;
-
+  
     @Prop()
-    filename: string;
+    idLink: string;
 
     @Prop()
     mimetype: string;
@@ -25,16 +22,13 @@ export class Images {
     @Prop({ default: '' })
     url: string;
 
-    @Prop()
-    codigo: string;
-
 }
 
 const ImagesSchema = SchemaFactory.createForClass(Images);
 
 ImagesSchema.pre<ImagesDocument>('save', function (next) {
   if (!this.url) {
-    this.url = `${env.URL}/images/${this.filename}`;
+    this.url = `${env.URL}/image/${this.idLink}`;
   }
   next();
 });
