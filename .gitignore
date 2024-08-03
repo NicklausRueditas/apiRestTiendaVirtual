@@ -3,6 +3,9 @@
 /node_modules
 /pdfs
 
+/uploads/*.png
+!/uploads/660eec764f0589c7141690f0.png
+
 # Logs
 logs
 *.log
