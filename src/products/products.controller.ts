@@ -3,17 +3,11 @@ import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 
-@Controller('products')
+@Controller('product')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) { }
 
-  @Get()
-  async findAllImages() {
-    const products = await this.productsService.findAllJoinImages();
-      return products;
-  }
-
-  @Get('date')
+  @Get('all')
   async findAll() {
     const products = await this.productsService.findAll();
       return products;

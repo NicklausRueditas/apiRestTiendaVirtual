@@ -4,41 +4,13 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import { Images, ImagesDocument } from '../images/schema/images.schema';
 import { Product, ProductDocument } from './schema/product.schema';
-
-
 
 @Injectable()
 export class ProductsService {
   constructor(
     @InjectModel(Product.name) private productModel: Model<ProductDocument>,
-    @InjectModel(Images.name) private imagesModel: Model<ImagesDocument>,
   ) { }
-
-  async findAllJoinImages(): Promise<ProductDocument[]> {
-    
-    // Realizar join entre 'products' e 'images' utilizando aggregate
-
-    try {
-      const productsWithImages = await this.productModel.aggregate([
-        {
-          $lookup: {
-            from: 'images',
-            localField: 'code',
-            foreignField: 'codigo',
-            as: 'images',
-          },
-        },
-      ]).exec();
-
-      return productsWithImages;
-
-    } catch (error) {
-      throw new Error('Error al obtener la lista de productos con imagenes');
-    }
-
-  }
 
   async findAll(): Promise<Product[]> {
     try {
@@ -51,7 +23,6 @@ export class ProductsService {
   }
 
   // Permisos de Trabajador o Administrador
-
 
   async create(createProductDto: CreateProductDto) {
     try {
