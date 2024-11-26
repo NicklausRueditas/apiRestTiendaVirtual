@@ -1,38 +1,61 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { SpecsProduct, SpecsProductsSchema } from './specs-product.schema';
-import { isValidObjectId } from 'mongoose';
+import { Document } from 'mongoose';
 
 export type ProductDocument = Product & Document
 
-@Schema({ timestamps: true })
+@Schema({ timestamps: true })  // timestamps agrega campos de createdAt y updatedAt automáticamente
 export class Product {
 
-    @Prop({ unique: true, length: 6 })
+    @Prop({ required: true,unique: true, length: 6 })  // Se asegura que el código sea único y tenga una longitud específica
     code: string;
 
-    @Prop({ minlength: 2 })
+    @Prop({required: true,  minlength: 2 })  // Requiere que el nombre tenga al menos 2 caracteres
     name: string;
 
-    @Prop({ minlength: 2 })
+    @Prop({ required: true })  // Marca el campo brand como requerido
     brand: string;
 
-    @Prop({ minlength: 2 })
-    model: string;
-
-    @Prop({ minlength: 10 })
-    description: string;
-
-    @Prop({ type: SpecsProductsSchema })
-    specifications: SpecsProduct;
+    @Prop({required: true})
+    model: string;  // Campo opcional para el modelo del producto
 
     @Prop()
-    price: number;
+    description: string;  // Campo opcional para la descripción del producto
 
-    @Prop({ type: [String], required: true })
+    @Prop({ type: [String] })  // Especificaciones en formato de arreglo de strings
+    specifications: string[];
+
+    @Prop()
+    color: string;
+
+    @Prop()
+    size: string;
+
+    @Prop({ type: [String] })  // Características en formato de arreglo de strings
+    characteristics: string[];
+
+    @Prop()
+    material: string;  // Campo opcional para el material del producto
+
+    @Prop({ type: [String] })  // Dimensiones en formato de arreglo de strings
+    dimension: string[];
+
+    @Prop()
+    weight: string;  // Campo opcional para el peso del producto
+
+    @Prop()
+    ability: string;  // Campo opcional para la capacidad del producto
+
+    @Prop({required: true})
+    price: number;  // Campo opcional para el precio del producto, podrías agregar validaciones como min y max
+
+    @Prop({ type: [String], required: true })  // Categoría es requerida y en formato de arreglo de strings
     category: string[];
 
-    @Prop()
-    stock: number;
+    @Prop({ type: [String], required: true })  // Galería es requerida y en formato de arreglo de strings
+    gallery: string[];
+
+    @Prop({required: true})
+    stock: number;  // Campo opcional para la cantidad en stock, podrías agregar validaciones como min
 }
 
-export const ProductSchema = SchemaFactory.createForClass(Product);
+export const ProductSchema = SchemaFactory.createForClass(Product);  // Crea el esquema de mongoose a partir de la clase

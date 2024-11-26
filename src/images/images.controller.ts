@@ -23,14 +23,14 @@ export class ImagesController {
       storage: diskStorage({
         destination: './uploads',
         filename: (req, file, cb) => {
-          const filename: string = req.body.idLink;
+          const filename: string = uuidv4();
           cb(null, `${filename}${extname(file.originalname)}`);
         }
       }),
 
       fileFilter: (req, file, cb) => {
 
-        if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
+        if (!file.originalname.match(/\.(jpg|jpeg|png|gif|webp)$/)) {
           return cb(new Error('Only image files are allowed!'), false);
         }
         cb(null, true);

@@ -50,9 +50,8 @@ export class AuthController {
     const token = this.jwtAuthService.generateJwtToken(user);
 
     // Establecer el token como una cookie en la respuesta (httpOnly para seguridad)
-    res.cookie('sessionToken', token, { httpOnly: true });
-
-    // Enviar una respuesta exitosa
-    res.send();
+    res.cookie('sessiontoken', token, { httpOnly: true, sameSite: 'Lax', secure: false });
+    res.status(200).send({ message: 'Inicio de sesión exitoso' });
+    // res.send();
   }
 }

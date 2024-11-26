@@ -11,7 +11,7 @@ export class ImagesService {
   constructor(@InjectModel(Images.name) private imagesModel: Model<ImagesDocument>) { }
 
   async uploadImage(file: Express.Multer.File, createImageDto: CreateImageDto): Promise<Images> {
-    const {filename, mimetype,size} = file;
+    const {filename,mimetype,size} = file;
     const idLink = filename
     const image = new this.imagesModel({
       ...createImageDto,
