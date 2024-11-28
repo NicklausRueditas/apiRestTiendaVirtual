@@ -17,12 +17,16 @@ export class CreateProductDto {
     brand: string;
   
     @IsString()
-    @IsNotEmpty() // Marca el campo brand como requerido
-    model?: string;
+    @IsNotEmpty() // Marca el campo model como requerido
+    model: string;
   
     @IsString()
     @IsOptional() // La descripción es opcional
     description?: string;
+
+    @IsString()
+    @IsNotEmpty()
+    supplier: string;
   
     @IsArray()
     @IsString({ each: true }) // Cada elemento del array debe ser un string
@@ -30,39 +34,21 @@ export class CreateProductDto {
     specifications?: string[];
   
     @IsString()
-    @IsOptional() // El color es opcional
-    color?: string;
+    @IsNotEmpty()
+    color: string;
   
     @IsString()
-    @IsOptional() // El tamaño es opcional
-    size?: string;
-  
-    @IsArray()
-    @IsString({ each: true })
-    @IsOptional() // Las características son opcionales
-    characteristics?: string[];
+    @IsNotEmpty()
+    size: string;
   
     @IsString()
-    @IsOptional() // El material es opcional
-    material?: string;
-  
-    @IsArray()
-    @IsString({ each: true })
-    @IsOptional() // Las dimensiones son opcionales
-    dimension?: string[];
-  
-    @IsString()
-    @IsOptional() // El peso es opcional
-    weight?: string;
-  
-    @IsString()
-    @IsOptional() // La capacidad es opcional
-    ability?: string;
+    @IsOptional() // La información es opcional
+    information?: string;
   
     @IsNumber()
     @IsPositive() // El precio debe ser un número positivo
     @IsNotEmpty() // Marca el campo brand como requerido
-    price?: number;
+    price: number;
   
     @IsArray()
     @IsString({ each: true })
@@ -76,6 +62,6 @@ export class CreateProductDto {
   
     @IsNumber()
     @IsPositive() // El stock debe ser un número positivo
-    @IsNotEmpty() // Marca el campo brand como requerido
-    stock?: number;
+    @IsNotEmpty()
+    stock: number;
 }

@@ -25,25 +25,16 @@ export class Product {
     specifications: string[];
 
     @Prop()
+    supplier: string;
+
+    @Prop()
     color: string;
 
     @Prop()
     size: string;
 
-    @Prop({ type: [String] })  // Características en formato de arreglo de strings
-    characteristics: string[];
-
     @Prop()
-    material: string;  // Campo opcional para el material del producto
-
-    @Prop({ type: [String] })  // Dimensiones en formato de arreglo de strings
-    dimension: string[];
-
-    @Prop()
-    weight: string;  // Campo opcional para el peso del producto
-
-    @Prop()
-    ability: string;  // Campo opcional para la capacidad del producto
+    information: string;  // Campo opcional para la información del producto
 
     @Prop({required: true})
     price: number;  // Campo opcional para el precio del producto, podrías agregar validaciones como min y max
