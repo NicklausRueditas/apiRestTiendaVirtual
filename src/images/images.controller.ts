@@ -23,8 +23,8 @@ export class ImagesController {
       storage: diskStorage({
         destination: './uploads',
         filename: (req, file, cb) => {
-          const filename: string = uuidv4();
-          cb(null, `${filename}${extname(file.originalname)}`);
+          const filename = uuidv4() + extname(file.originalname);
+          cb(null, filename);
         }
       }),
 
