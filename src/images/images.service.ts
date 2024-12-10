@@ -1,9 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateImageDto } from './dto/create-image.dto';
 import { UpdateImageDto } from './dto/update-image.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Images, ImagesDocument } from './schema/images.schema';
 import { Model } from 'mongoose';
+import * as path from 'path';
+import * as fs from 'fs';
 
 @Injectable()
 export class ImagesService {
@@ -35,7 +37,23 @@ export class ImagesService {
     return `This action updates a #${id} image`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} image`;
+  async remove(idLink: string): Promise<{ deleted: boolean; message?: string }> {
+    // Paso 1: Eliminar el documento de la base de datos
+    const result = await this.imagesModel.deleteOne({ idLink }).exec();
+    if (result.deletedCount === 0) {
+      throw new NotFoundException(`Image with idLink ${idLink} not found.`);
+    }
+
+    // Paso 2: Eliminar el archivo del sistema de archivos
+    const filePath = path.join(__dirname, '../../uploads', idLink); // Ajusta la ruta según tu estructura
+    try {
+      fs.unlinkSync(filePath); // Elimina el archivo de forma sincrónica
+    } catch (error) {
+      console.error(`Error deleting file ${filePath}:`, error.message);
+      return { deleted: true, message: `Document deleted but failed to delete file: ${error.message}` };
+    }
+
+    // Retorna un mensaje de éxito
+    return { deleted: true, message: `Image with idLink ${idLink} successfully deleted.` };
   }
 }

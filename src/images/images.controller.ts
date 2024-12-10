@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, Res } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, Res, NotFoundException } from '@nestjs/common';
 import { ImagesService } from './images.service';
 import { CreateImageDto } from './dto/create-image.dto';
 import { UpdateImageDto } from './dto/update-image.dto';
@@ -70,7 +70,11 @@ export class ImagesController {
   }
 
   @Delete(':idLink')
-  remove(@Param('idLink') idLink: string) {
-    return this.imagesService.remove(+idLink);
+  async remove(@Param('idLink') idLink: string) {
+    const result = await this.imagesService.remove(idLink);
+    if (!result) {
+      throw new NotFoundException(`Image with ID ${idLink} not found.`);
+    }
+    return { message: 'Image successfully deleted', id: idLink };
   }
 }
